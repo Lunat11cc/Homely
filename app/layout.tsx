@@ -1,7 +1,11 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ClientOnly from "@/app/components/ClientOnly";
 import Navbar from "@/app/components/navbar/Navbar";
+import RegisterModal from "@/app/components/modals/RegisterModal";
+import ToasterProvider from "@/app/providers/ToasterProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +22,11 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={inter.className}>
-        <Navbar />
+      <ClientOnly>
+          <ToasterProvider />
+          <RegisterModal />
+          <Navbar />
+      </ClientOnly>
         {children}
       </body>
     </html>
