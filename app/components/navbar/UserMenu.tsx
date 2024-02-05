@@ -1,13 +1,23 @@
 'use client';
 
+import React, { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "@/app/components/Avatar";
-import { useCallback, useState } from "react";
 import MenuItem from "@/app/components/navbar/MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import {SafeUser} from "@/app/types";
+import { signOut } from "next-auth/react";
 
-const UserMenu = () => {
+interface UserMenuProps {
+    currentUser?: SafeUser | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({
+    currentUser
+}) => {
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = useCallback(() => {
@@ -75,16 +85,46 @@ const UserMenu = () => {
                     "
                 >
                     <div className="flex flex-col cursor-pointer">
-                        <>
-                            <MenuItem
-                                onClick={() => {}}
-                                label="Вход"
-                            />
-                            <MenuItem
-                                onClick={registerModal.onOpen}
-                                label="Регистрация"
-                            />
-                        </>
+                        {currentUser ? (
+                            <>
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="Мои поездки"
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="Избранное"
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="Мои бронирования"
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="Мои помещения"
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="Homely мой дом"
+                                />
+                                <hr />
+                                <MenuItem
+                                    onClick={() => signOut()}
+                                    label="Выход"
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <MenuItem
+                                    onClick={loginModal.onOpen}
+                                    label="Вход"
+                                />
+                                <MenuItem
+                                    onClick={registerModal.onOpen}
+                                    label="Регистрация"
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             )}

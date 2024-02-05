@@ -1,34 +1,40 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import ClientOnly from "@/app/components/ClientOnly";
 import Navbar from "@/app/components/navbar/Navbar";
 import RegisterModal from "@/app/components/modals/RegisterModal";
+import LoginModal from "@/app/components/modals/LoginModal";
 import ToasterProvider from "@/app/providers/ToasterProvider";
-
-const inter = Inter({ subsets: ["latin"] });
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 export const metadata: Metadata = {
   title: "Homely",
   description: "Travel web-site",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="ru">
-      <body className={inter.className}>
-      <ClientOnly>
-          <ToasterProvider />
-          <RegisterModal />
-          <Navbar />
-      </ClientOnly>
-        {children}
-      </body>
-    </html>
-  );
+const font = Nunito({
+    subsets: ["latin"],
+});
+
+export default async function RootLayout({
+    children,
+}: {
+    children: React.ReactNode
+}) {
+    const currentUser = await getCurrentUser();
+    return (
+        <html lang="ru">
+          <body className={font.className}>
+          <ClientOnly>
+              <ToasterProvider />
+              <LoginModal />
+              <RegisterModal />
+              <Navbar currentUser={currentUser}/>
+          </ClientOnly>
+            {children}
+          </body>
+        </html>
+    );
 }
