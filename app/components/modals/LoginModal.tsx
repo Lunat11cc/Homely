@@ -87,7 +87,7 @@ const LoginModal = () => {
                 outline
                 label="Продолжить с помощью Google"
                 icon={FcGoogle}
-                onClick={() => {}}
+                onClick={() => signIn('google')}
             />
             <Button
                 outline
