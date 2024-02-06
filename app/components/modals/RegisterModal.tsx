@@ -3,18 +3,20 @@
 import axios from "axios";
 import { FaYandex } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { SiMaildotru } from "react-icons/si";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Modal from "@/app/components/modals/Modal";
 import Heading from "@/app/components/Heading";
 import Input from "@/app/components/inputs/Input";
 import toast from "react-hot-toast";
 import Button from "@/app/components/Button";
+import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
 
     const {
@@ -91,15 +93,8 @@ const RegisterModal = () => {
                 outline
                 label="Продолжить с помощью Яндекс"
                 icon={FaYandex}
-                onClick={() => {}}
+                onClick={() => signIn('yandex')}
                 iconColor="red"
-            />
-            <Button
-                outline
-                label="Продолжить с помощью Mail.ru"
-                icon={SiMaildotru}
-                onClick={() => {}}
-                iconColor="blue"
             />
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <div className="flex flex-row justify-center items-center gap-2">
@@ -107,7 +102,10 @@ const RegisterModal = () => {
                         Уже есть аккаунт?
                     </div>
                     <div
-                        onClick={registerModal.onClose}
+                        onClick={() => {
+                            registerModal.onClose();
+                            loginModal.onOpen();
+                        }}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Войти

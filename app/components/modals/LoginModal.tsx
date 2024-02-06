@@ -3,7 +3,6 @@
 import { signIn } from "next-auth/react";
 import { FaYandex } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { SiMaildotru } from "react-icons/si";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
@@ -94,26 +93,22 @@ const LoginModal = () => {
                 outline
                 label="Продолжить с помощью Яндекс"
                 icon={FaYandex}
-                onClick={() => {}}
+                onClick={() => signIn('yandex')}
                 iconColor="red"
-            />
-            <Button
-                outline
-                label="Продолжить с помощью Mail.ru"
-                icon={SiMaildotru}
-                onClick={() => {}}
-                iconColor="blue"
             />
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <div className="flex flex-row justify-center items-center gap-2">
                     <div>
-                        Уже есть аккаунт?
+                        Нет аккаунта?
                     </div>
                     <div
-                        onClick={registerModal.onClose}
+                        onClick={() => {
+                            loginModal.onClose();
+                            registerModal.onOpen();
+                        }}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
-                        Войти
+                        Зарегистрироваться
                     </div>
                 </div>
             </div>
