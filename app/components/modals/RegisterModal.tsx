@@ -3,7 +3,7 @@
 import axios from "axios";
 import { FaYandex } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import {useCallback, useState} from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
@@ -45,6 +45,11 @@ const RegisterModal = () => {
                 setIsLoading(false);
             })
     }
+
+    const toggle = useCallback(() => {
+        registerModal.onClose();
+        loginModal.onOpen();
+    }, [loginModal, registerModal]);
 
     const bodyContent = (
        <div className="flex flex-col gap-4">
@@ -102,10 +107,7 @@ const RegisterModal = () => {
                         Уже есть аккаунт?
                     </div>
                     <div
-                        onClick={() => {
-                            registerModal.onClose();
-                            loginModal.onOpen();
-                        }}
+                        onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Войти
