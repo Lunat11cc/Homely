@@ -9,6 +9,7 @@ import { categories } from "@/app/data/Categories";
 import CategoryInput from "@/app/components/inputs/CategoryInput";
 import CountrySelect from "@/app/components/inputs/CountrySelect";
 import dynamic from "next/dynamic";
+import Counter from "@/app/components/inputs/Counter";
 
 enum STEPS {
     CATEGORY = 0,
@@ -49,6 +50,9 @@ const RentModal = () => {
 
     const category = watch('category');
     const location = watch('location');
+    const guestCount = watch('guestCount');
+    const roomCount = watch('roomCount');
+    const bathroomCount = watch('bathroomCount');
 
     const Map = useMemo(() => dynamic(() => import('@/app/components/Map'), {
         ssr: false
@@ -120,6 +124,37 @@ const RentModal = () => {
                 />
                 <Map
                     center={location?.latlng}
+                />
+            </div>
+        )
+    }
+
+    if (step === STEPS.INFO) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Расскажите немного о своем месте"
+                    subtitle="Какими удобствами вы располагаете?"
+                />
+                <Counter
+                    title="Количество гостей"
+                    subtitle="Сколько вы принимаете гостей?"
+                    value={guestCount}
+                    onChange={(value) => setCustomValue('guestCount', value)}
+                />
+                <hr />
+                <Counter
+                    title="Комнаты"
+                    subtitle="Сколько у вас комнат?"
+                    value={roomCount}
+                    onChange={(value) => setCustomValue('roomCount', value)}
+                />
+                <hr />
+                <Counter
+                    title="Ванные комнаты"
+                    subtitle="Сколько у вас ванных комнат?"
+                    value={bathroomCount}
+                    onChange={(value) => setCustomValue('bathroomCount', value)}
                 />
             </div>
         )
