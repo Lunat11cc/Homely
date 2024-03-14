@@ -3,7 +3,8 @@ const nextConfig = {
     images: {
         domains: [
             "avatars.yandex.net",
-            "lh3.googleusercontent.com"
+            "lh3.googleusercontent.com",
+            "res.cloudinary.com"
         ]
     }
 };
