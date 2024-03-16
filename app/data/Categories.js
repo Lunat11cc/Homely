@@ -13,46 +13,46 @@ export const categories = [
     {
         label: 'Пляж',
         icon: TbBeach,
-        description: 'This property is close to the beach!',
+        description: 'Это место находится недалеко от пляжа!',
     },
     {
         label: 'Модерн',
         icon: MdOutlineVilla,
-        description: 'This property is modern!'
+        description: 'Это современное место!'
     },
     {
         label: 'Бассейны',
         icon: TbPool,
-        description: 'This is property has a beautiful pool!'
+        description: 'В этом месте есть прекрасный бассейн!'
     },
     {
         label: 'Острова',
         icon: GiIsland,
-        description: 'This property is on an island!'
+        description: 'Это место находится на острове!'
     },
     {
         label: 'Озера',
         icon: GiBoatFishing,
-        description: 'This property is near a lake!'
+        description: 'Это место находится рядом с озером!'
     },
     {
         label: 'Лыжи',
         icon: FaSkiing,
-        description: 'This property has skiing activies!'
+        description: 'В этом месте можно заняться лыжным спортом!'
     },
     {
         label: 'Горы',
         icon: GiCaveEntrance,
-        description: 'This property is in a spooky cave!'
+        description: 'Это место находится возле красивых гор!'
     },
     {
         label: 'Кемпинг',
         icon: GiForestCamp,
-        description: 'This property offers camping activities!'
+        description: 'В этом месте можно заняться кемпингом!'
     },
     {
         label: 'Люкс',
         icon: IoDiamond,
-        description: 'This property is brand new and luxurious!'
+        description: 'Это место роскошное и новое!'
     }
 ]
