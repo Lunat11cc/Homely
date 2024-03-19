@@ -20,7 +20,7 @@ interface MapProps {
     center?: number[]
 }
 
-const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const url = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}";
 
 const Map: React.FC<MapProps> = ({ center }) => {
     return (
