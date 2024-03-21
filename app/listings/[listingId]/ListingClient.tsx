@@ -68,10 +68,9 @@ const ListingClient: React.FC<ListingClientProps> = ({
             endDate: dateRange.endDate,
             listingId: listing?.id
         }).then(() => {
-            toast.success('Объявление зарезервировано!');
+            toast.success('Объявление забронировано!');
             setDateRange(initialDateRange);
-            // Redirect to /trips
-            router.refresh();
+            router.push("/trips");
         }).catch(() => {
             toast.error('Что-то пошло не так');
         }).finally(() => {
