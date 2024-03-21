@@ -1,7 +1,5 @@
 import { getServerSession } from "next-auth/next";
-// @ts-ignore
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-// @ts-ignore
 import prisma from "@/app/libs/prismadb";
 
 export async function getSession() {
