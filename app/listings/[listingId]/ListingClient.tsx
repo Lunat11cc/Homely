@@ -39,7 +39,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     const disabledDates = useMemo(() => {
         let dates: Date[] = [];
 
-        reservations.forEach((reservation) => {
+        reservations.forEach((reservation: any) => {
             const range = eachDayOfInterval({
                 start: new Date(reservation.startDate),
                 end: new Date(reservation.endDate)
@@ -67,13 +67,16 @@ const ListingClient: React.FC<ListingClientProps> = ({
             startDate: dateRange.startDate,
             endDate: dateRange.endDate,
             listingId: listing?.id
-        }).then(() => {
+        })
+        .then(() => {
             toast.success('Объявление забронировано!');
             setDateRange(initialDateRange);
             router.push('/trips');
-        }).catch(() => {
+        })
+        .catch(() => {
             toast.error('Что-то пошло не так');
-        }).finally(() => {
+        })
+            .finally(() => {
             setIsLoading(false);
         })
     }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal]);

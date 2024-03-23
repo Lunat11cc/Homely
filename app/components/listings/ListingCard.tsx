@@ -25,7 +25,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     onAction,
     disabled,
     actionLabel,
-    actionId = "",
+    actionId = '',
     currentUser
 }) => {
     const router = useRouter();
@@ -99,6 +99,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 </div>
                 {onAction && actionLabel && (
                     <Button
+                        small
                         disabled={disabled}
                         label={actionLabel}
                         onClick={handleCancel}
