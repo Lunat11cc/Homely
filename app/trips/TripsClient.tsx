@@ -41,7 +41,7 @@ const TripsClient: React.FC<TripsClientProps> = ({
         <Container>
             <Heading
                 title="Поездки"
-                subtitle="Где вы были и куда направляетесь"
+                subtitle="Список мест, которые вы забронировали"
             />
             <div className="
                 mt-10

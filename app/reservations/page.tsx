@@ -12,7 +12,7 @@ const ReservationsPage = async () => {
         <ClientOnly>
           <EmptyState
               title="Вы не авторизированы"
-              subtitle="Пожалуйста, авторизируйтесь"
+              subtitle="Пожалуйста, авторизируйтесь!"
           />
         </ClientOnly>
     )
@@ -27,7 +27,7 @@ const ReservationsPage = async () => {
         <ClientOnly>
           <EmptyState
               title="Бронирований не найдено"
-              subtitle="Похоже, у вас нет бронирований на вашу недвижимость"
+              subtitle="Похоже, что нет бронирований на ваше жилье"
           />
         </ClientOnly>
     )

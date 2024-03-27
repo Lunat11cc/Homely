@@ -12,7 +12,7 @@ const PropertiesPage = async () => {
             <ClientOnly>
                 <EmptyState
                     title="Вы не авторизированы"
-                    subtitle="Пожалуйста, авторизируйтесь"
+                    subtitle="Пожалуйста, авторизируйтесь!"
                 />
             </ClientOnly>
         )
@@ -24,8 +24,8 @@ const PropertiesPage = async () => {
         return (
             <ClientOnly>
                 <EmptyState
-                    title="Жильё не найдено"
-                    subtitle="Похоже, у вас нет жилья на бронирование"
+                    title="Жилье не найдено"
+                    subtitle="Похоже, что у вас нет жилья на бронирование"
                 />
             </ClientOnly>
         )

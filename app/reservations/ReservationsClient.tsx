@@ -41,7 +41,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
         <Container>
             <Heading
                 title="Бронирования"
-                subtitle="Бронирования вашей недвижимости"
+                subtitle="Бронирования вашего жилья"
             />
             <div
                 className="
@@ -64,7 +64,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
                         actionId={reservation.id}
                         onAction={onCancel}
                         disabled={deletingId === reservation.id}
-                        actionLabel="Отменить бронирование для гостей"
+                        actionLabel="Отменить бронирование"
                         currentUser={currentUser}
                     />
                 ))}

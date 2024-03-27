@@ -25,7 +25,7 @@ const TripsPage = async () => {
             <ClientOnly>
                 <EmptyState
                     title="Поездок не найдено"
-                    subtitle="Похоже, вы не забронировали ни одной поездки"
+                    subtitle="Похоже, что вы не забронировали ни одной поездки"
                 />
             </ClientOnly>
         )
