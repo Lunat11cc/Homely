@@ -1,0 +1,26 @@
+'use client';
+
+import React, { useEffect } from 'react';
+// @ts-ignore
+import EmptyState from "@/app/components/EmptyState";
+
+interface ErrorStateProps {
+    error: Error
+}
+
+const ErrorState: React.FC<ErrorStateProps> = ({
+    error
+}) => {
+    useEffect(() => {
+        console.error(error);
+    }, [error]);
+
+    return (
+        <EmptyState
+            title="Страница не найдена"
+            subtitle="Что-то пошло не так!"
+        />
+    );
+};
+
+export default ErrorState;

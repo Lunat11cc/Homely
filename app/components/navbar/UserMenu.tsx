@@ -54,7 +54,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                         cursor-pointer
                     "
                 >
-                    Homely!
+                    Сдать жилье на Homely
                 </div>
                 <div
                     onClick={toggleOpen}
@@ -101,28 +101,25 @@ const UserMenu: React.FC<UserMenuProps> = ({
                             <>
                                 <MenuItem
                                     onClick={() => router.push('/trips')}
-                                    label="Мои поездки"
+                                    label="Поездки"
                                 />
                                 <MenuItem
                                     onClick={() => router.push('/favorites')}
                                     label="Избранное"
                                 />
-                                <MenuItem
-                                    onClick={() => router.push('/reservations')}
-                                    label="Мои бронирования"
-                                />
+                                <hr />
                                 <MenuItem
                                     onClick={() => router.push('/properties')}
-                                    label="Моё жильё"
+                                    label="Мое жилье"
                                 />
                                 <MenuItem
-                                    onClick={rentModal.onOpen}
-                                    label="Homely!"
+                                    onClick={() => router.push('/reservations')}
+                                    label="Бронирования"
                                 />
                                 <hr />
                                 <MenuItem
                                     onClick={() => signOut()}
-                                    label="Выход"
+                                    label="Выйти"
                                 />
                             </>
                         ) : (

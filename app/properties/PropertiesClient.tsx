@@ -40,8 +40,8 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
     return (
         <Container>
             <Heading
-                title="Жильё"
-                subtitle="Список вашего жилья"
+                title="Жилье"
+                subtitle="Список ваших мест"
             />
             <div className="
                 mt-10
@@ -62,7 +62,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
                         actionId={listing.id}
                         onAction={onCancel}
                         disabled={deletingId === listing.id}
-                        actionLabel="Удалить жильё"
+                        actionLabel="Удалить жилье"
                         currentUser={currentUser}
                     />
                 ))}
