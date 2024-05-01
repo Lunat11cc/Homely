@@ -1,74 +1,76 @@
-'use client';
-
-import { CldUploadWidget } from "next-cloudinary";
-import Image from "next/image";
 import React, { useCallback } from "react";
+import Image from "next/image";
 import { TbPhotoPlus } from "react-icons/tb";
-
-declare global {
-    var cloudinary: any;
-}
+import ImageUploadModal from "@/app/components/modals/ImageUploadModal";
 
 interface ImageUploadProps {
     onChange: (value: string) => void;
     value: string;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({
-    onChange,
-    value
-}) => {
-    const handleUpload = useCallback((result: any) => {
-        onChange(result.info.secure_url);
+const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
+    const handleUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const imageDataUrl = reader.result as string;
+                onChange(imageDataUrl);
+            };
+            reader.readAsDataURL(file);
+        }
     }, [onChange]);
 
+    const handleDelete = useCallback(() => {
+        onChange("");
+    }, [onChange]);
+
+    const handleEdit = useCallback(() => {
+        const fileInput = document.getElementById("file-input") as HTMLInputElement;
+        fileInput.click();
+    }, []);
+
     return (
-        <CldUploadWidget
-            onUpload={handleUpload}
-            uploadPreset="nw4bip2s"
-            options={{
-                maxFiles: 1
-            }}
+        <div
+            className="
+                relative
+                cursor-pointer
+                transition
+                border-dashed
+                border-2
+                p-20
+                border-neutral-300
+                flex
+                flex-col
+                justify-center
+                items-center
+                gap-4
+                text-neutral-600
+            "
         >
-            {({ open }) => {
-                return (
-                    <div
-                        onClick={() => open?.()}
-                        className="
-                        relative
-                        cursor-pointer
-                        hover:opacity-70
-                        transition
-                        border-dashed
-                        border-2
-                        p-20
-                        border-neutral-300
-                        flex
-                        flex-col
-                        justify-center
-                        items-center
-                        gap-4
-                        text-neutral-600
-                        "
-                    >
-                        <TbPhotoPlus size={40} />
-                        <div className="font-semibold text-lg">
-                            Нажмите, чтобы загрузить
-                        </div>
-                        {value && (
-                            <div className="absolute inset-0 w-full h-full">
-                               <Image
-                                   src={value}
-                                   alt="Загрузка"
-                                   fill
-                                   style={{ objectFit: 'cover' }}
-                               />
-                            </div>
-                        )}
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleUpload}
+                className="hidden"
+                id="file-input"
+            />
+            <label htmlFor="file-input" className="hover:opacity-70">
+                <TbPhotoPlus size={40} />
+                <div className="font-semibold text-lg">Нажмите, чтобы загрузить</div>
+            </label>
+            {value && (
+                <>
+                    <div className="absolute inset-0 w-full h-full">
+                        <Image src={value} alt="Загрузка" layout="fill" objectFit="cover" />
                     </div>
-                )
-            }}
-        </CldUploadWidget>
+                    <div
+                        className="absolute top-2 right-2 px-2 py-1">
+                        <ImageUploadModal onDelete={handleDelete} onEdit={handleEdit} />
+                    </div>
+                </>
+            )}
+        </div>
     );
 };
 

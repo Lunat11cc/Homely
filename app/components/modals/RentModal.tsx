@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 
 enum STEPS {
     CATEGORY = 0,
+    // CONVENIENCE = 1,
     LOCATION = 1,
     INFO = 2,
     IMAGES = 3,
@@ -139,6 +140,17 @@ const RentModal = () => {
             </div>
         </div>
     )
+
+    // if (step === STEPS.CONVENIENCE) {
+    //     bodyContent = (
+    //         <div className="flex flex-col gap-8">
+    //             <Heading
+    //                 title="Какие удобства у вас есть?"
+    //                 subtitle="Расскажите гостям о своих удобствах!"
+    //             />
+    //         </div>
+    //     )
+    // }
 
     if (step === STEPS.LOCATION) {
         bodyContent = (
