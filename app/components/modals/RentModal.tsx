@@ -90,6 +90,8 @@ const RentModal = () => {
 
         setIsLoading(true);
 
+        console.log(data.imageSrc)
+
         axios.post('/api/listings', data)
             .then(() => {
                 toast.success('Объявление создано!');

@@ -35,7 +35,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
             <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
                 <Image
                     fill
-                    src={imageSrc}
+                    src={imageSrc[0]}
                     alt="Фотография"
                     className="object-cover w-full"
                 />
