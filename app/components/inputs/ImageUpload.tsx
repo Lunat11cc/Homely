@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import Image from "next/image";
 import { TbPhotoPlus } from "react-icons/tb";
 import ImageUploadModal from "@/app/components/modals/ImageUploadModal";
@@ -9,7 +9,9 @@ interface ImageUploadProps {
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
-    const handleUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileInputRefs = useRef<HTMLInputElement[]>([]);
+
+    const handleUpload = useCallback((index: number, event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files) {
             const newImages: string[] = [];
@@ -25,7 +27,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
                 });
             });
             Promise.all(promises).then(() => {
-                const updatedImages = [...value, ...newImages];
+                const updatedImages = [...value];
+                updatedImages[index] = newImages[0];
                 onChange(updatedImages);
             });
         }
@@ -37,9 +40,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
         onChange(newImages);
     }, [onChange, value]);
 
-    const handleEdit = useCallback(() => {
-        const fileInput = document.getElementById("file-input") as HTMLInputElement;
-        fileInput.click();
+    const handleEdit = useCallback((index: number) => {
+        fileInputRefs.current[index].click();
     }, []);
 
     return (
@@ -47,28 +49,28 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
             {value.length === 0 ? (
                 <div
                     className="
-                relative
-                cursor-pointer
-                transition
-                border-dashed
-                border-2
-                p-20
-                border-neutral-300
-                flex
-                flex-col
-                justify-center
-                items-center
-                gap-4
-                text-neutral-600
-            "
+                        relative
+                        cursor-pointer
+                        transition
+                        border-dashed
+                        border-2
+                        p-20
+                        border-neutral-300
+                        flex
+                        flex-col
+                        justify-center
+                        items-center
+                        gap-4
+                        text-neutral-600
+                    "
                 >
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={handleUpload}
+                        onChange={(event) => handleUpload(0, event)}
                         className="hidden"
                         id="file-input"
-                        multiple
+                        ref={(input) => fileInputRefs.current[0] = input as HTMLInputElement}
                     />
                     <label htmlFor="file-input" className="hover:opacity-70">
                         <TbPhotoPlus size={40}/>
@@ -93,30 +95,58 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
                                 justify-center
                                 items-center
                                 text-neutral-600
-                                ${index === 0 ? 'w-full h-72' : 'w-32 h-32'} 
+                                ${index === 0 ? 'w-full h-72' : 'w-[227px] h-32'} 
                             `}
                         >
                             <div className="absolute w-full h-full">
                                 <Image src={imageUrl} alt="Загрузка" layout="fill" objectFit="cover"/>
                             </div>
                             <div className="absolute top-2 right-2 px-2 py-1">
-                                <ImageUploadModal onEdit={handleEdit} onDelete={() => handleDelete(index)} />
+                                <ImageUploadModal onEdit={() => handleEdit(index)} onDelete={() => handleDelete(index)}/>
                             </div>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(event) => handleUpload(index, event)}
+                                className="hidden"
+                                ref={(input) => fileInputRefs.current[index] = input as HTMLInputElement}
+                            />
                         </div>
                     ))}
-
-                    <label htmlFor="file-input" className="hover:opacity-70 cursor-pointer">
-                        <TbPhotoPlus size={40} />
-                        <div className="font-semibold text-lg">Загрузить еще фото</div>
-                    </label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleUpload}
-                        className="hidden"
-                        id="file-input"
-                        multiple
-                    />
+                    {[...Array(Math.max(0, 4 - value.length))].map((_, index) => (
+                        <div
+                            key={index}
+                            className="
+                                relative
+                                cursor-pointer
+                                transition
+                                border-dashed
+                                border-2
+                                p-20
+                                border-neutral-300
+                                flex
+                                flex-col
+                                justify-center
+                                items-center
+                                gap-4
+                                text-neutral-600
+                                w-[227px]
+                                h-32
+                            "
+                        >
+                            <label htmlFor={`file-input-${index}`} className="hover:opacity-70 cursor-pointer">
+                                <TbPhotoPlus size={40}/>
+                            </label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(event) => handleUpload(value.length + index, event)}
+                                className="hidden"
+                                id={`file-input-${index}`}
+                                ref={(input) => fileInputRefs.current[value.length + index] = input as HTMLInputElement}
+                            />
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
