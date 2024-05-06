@@ -42,7 +42,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
                 </div>
                 <hr/>
             </div>
-            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black mt-4">
+            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black mt-3">
                 <div className="flex flex-row gap-4">
                     <IoIosCheckmarkCircle size={25} color="#F8C07E" />
                     Принимает гостей: {guestCount}
