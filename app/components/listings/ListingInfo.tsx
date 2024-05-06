@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { SafeUser } from "@/app/types";
-import { IconType } from "react-icons";
 import useCountries from "@/app/hooks/useCountries";
 import Avatar from "@/app/components/Avatar";
-import ListingCategory from "@/app/components/listings/ListingCategory";
 import dynamic from "next/dynamic";
+import { FcApproval } from "react-icons/fc";
 
 const Map = dynamic(() => import('@/app/components/Map'), {
     ssr: false
@@ -15,25 +14,19 @@ const Map = dynamic(() => import('@/app/components/Map'), {
 interface ListingInfoProps {
     user: SafeUser;
     description: string;
+    locationValue: string;
     guestCount: number;
     roomCount: number;
     bathroomCount: number;
-    category: {
-        icon: IconType;
-        label: string;
-        description: string;
-    } | undefined
-    locationValue: string;
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
     user,
     description,
+    locationValue,
     guestCount,
     roomCount,
-    bathroomCount,
-    category,
-    locationValue
+    bathroomCount
 }) => {
     const { getByValue } = useCountries();
 
@@ -42,36 +35,33 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
     return (
         <div className="col-span-4 flex flex-col gap-8">
             <div className="flex flex-col gap-2">
-                <div className="text-xl font-semibold flex flex-row items-center gap-2">
-                    <div>Создано {user?.name}</div>
-                    <Avatar src={user?.image} />
+                <hr/>
+                <div className="text-xl font-semibold flex flex-row items-center gap-2 mt-4 mb-4">
+                    <Avatar src={user?.image}/>
+                    <div>Хозяин: {user?.name}</div>
                 </div>
-                <div className="flex flex-row items-center gap-4 font-light text-neutral-500">
-                    <div>
-                        Гостей: {guestCount}
-                    </div>
-                    <div>
-                        Комнат: {roomCount}
-                    </div>
-                    <div>
-                        Ванных комнат: {bathroomCount}
-                    </div>
+                <hr/>
+            </div>
+            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black">
+                <div className="flex flex-row gap-4">
+                    <FcApproval size={25} />
+                    Принимает гостей: {guestCount}
+                </div>
+                <div className="flex flex-row gap-4">
+                    <FcApproval size={25} />
+                    Всего комнат: {roomCount}
+                </div>
+                <div className="flex flex-row gap-4">
+                    <FcApproval size={25} />
+                    Ванных комнат: {bathroomCount}
                 </div>
             </div>
-            <hr />
-            {category && (
-                <ListingCategory
-                    icon={category.icon}
-                    label={category.label}
-                    description={category.description}
-                />
-            )}
             <hr />
             <div className="text-lg font-light text-neutral-500">
                 {description}
             </div>
-            <hr />
-            <Map center={coordinates} />
+            <hr/>
+            <Map center={coordinates}/>
         </div>
     );
 };

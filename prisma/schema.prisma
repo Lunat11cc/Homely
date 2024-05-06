@@ -49,6 +49,7 @@ model Listing {
   imageSrc      String[]
   createdAt     DateTime @default(now())
   category      String
+  convenience   String[]
   roomCount     Int
   bathroomCount Int
   guestCount    Int

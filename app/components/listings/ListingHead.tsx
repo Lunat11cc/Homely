@@ -4,6 +4,8 @@ import useCountries from "@/app/hooks/useCountries";
 import Heading from "@/app/components/Heading";
 import Image from "next/image";
 import HeartButton from "@/app/components/HeartButton";
+import ListingCategory from "@/app/components/listings/ListingCategory";
+import {IconType} from "react-icons";
 
 interface ListingHeadProps {
     title: string;
@@ -11,6 +13,11 @@ interface ListingHeadProps {
     imageSrc: string[];
     id: string;
     currentUser?: SafeUser | null;
+    category: {
+        icon: IconType;
+        label: string;
+        description: string;
+    } | undefined
 }
 
 const ListingHead: React.FC<ListingHeadProps> = ({
@@ -18,7 +25,8 @@ const ListingHead: React.FC<ListingHeadProps> = ({
      locationValue,
      imageSrc,
      id,
-     currentUser
+     currentUser,
+     category,
 }) => {
     const { getByValue } = useCountries();
     const location = getByValue(locationValue);
@@ -28,7 +36,6 @@ const ListingHead: React.FC<ListingHeadProps> = ({
         <>
             <Heading
                 title={title}
-                subtitle={`${location?.region}, ${location?.label}`}
             />
             <div className="relative">
                 <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
@@ -62,6 +69,14 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                         </div>
                     ))}
                 </div>
+                <h1 className="text-2xl font-bold mt-10">{`${location?.region}, ${location?.label}`}</h1>
+                {category && (
+                    <ListingCategory
+                        icon={category.icon}
+                        label={category.label}
+                        description={category.description}
+                    />
+                )}
             </div>
         </>
     );

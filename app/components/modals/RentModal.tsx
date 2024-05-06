@@ -18,12 +18,12 @@ import { useRouter } from "next/navigation";
 
 enum STEPS {
     CATEGORY = 0,
-    // CONVENIENCE = 1,
     LOCATION = 1,
     INFO = 2,
     IMAGES = 3,
-    DESCRIPTION = 4,
-    PRICE = 5
+    CONVENIENCE = 4,
+    DESCRIPTION = 5,
+    PRICE = 6
 }
 
 const RentModal = () => {
@@ -143,17 +143,6 @@ const RentModal = () => {
         </div>
     )
 
-    // if (step === STEPS.CONVENIENCE) {
-    //     bodyContent = (
-    //         <div className="flex flex-col gap-8">
-    //             <Heading
-    //                 title="Какие удобства у вас есть?"
-    //                 subtitle="Расскажите гостям о своих удобствах!"
-    //             />
-    //         </div>
-    //     )
-    // }
-
     if (step === STEPS.LOCATION) {
         bodyContent = (
             <div className="flex flex-col gap-8">
@@ -213,6 +202,17 @@ const RentModal = () => {
                 <ImageUpload
                     value={imageSrc}
                     onChange={(value) => setCustomValue('imageSrc', value)}
+                />
+            </div>
+        )
+    }
+
+    if (step === STEPS.CONVENIENCE) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Какие удобства у вас есть?"
+                    subtitle="Расскажите гостям о своих удобствах!"
                 />
             </div>
         )
