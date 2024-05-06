@@ -9,6 +9,9 @@ export interface IListingParams {
     endDate?: string;
     locationValue?: string;
     category?: string;
+    convenience?: string;
+    special?: string;
+    safety?: string;
 }
 
 export default async function getListings(
@@ -23,7 +26,10 @@ export default async function getListings(
             locationValue,
             startDate,
             endDate,
-            category
+            category,
+            convenience,
+            special,
+            safety
         } = params;
 
         let query: any = {};
@@ -34,6 +40,18 @@ export default async function getListings(
 
         if (category) {
             query.category = category;
+        }
+
+        if (convenience) {
+            query.convenience = convenience;
+        }
+
+        if (special) {
+            query.special = special;
+        }
+
+        if (safety) {
+            query.safety = safety;
         }
 
         if (guestCount) {

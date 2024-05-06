@@ -15,6 +15,12 @@ import Input from "@/app/components/inputs/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import {conveniences} from "@/app/data/Conveniences";
+import {specials} from "@/app/data/Specials";
+import {safeties} from "@/app/data/Safety";
+import ConvenienceInput from "@/app/components/inputs/ConvenienceInput";
+import SpecialInput from "@/app/components/inputs/SpecialInput";
+import SafetyInput from "@/app/components/inputs/SafetyInput";
 
 enum STEPS {
     CATEGORY = 0,
@@ -50,6 +56,9 @@ const RentModal = () => {
             roomCount: 1,
             bathroomCount: 1,
             imageSrc: '',
+            convenience: '',
+            special: '',
+            safety: '',
             price: 0,
             title: '',
             description: ''
@@ -62,6 +71,9 @@ const RentModal = () => {
     const roomCount = watch('roomCount');
     const bathroomCount = watch('bathroomCount');
     const imageSrc = watch('imageSrc');
+    const convenience = watch('convenience');
+    const special = watch('special');
+    const safety = watch('safety');
 
     const Map = useMemo(() => dynamic(() => import('@/app/components/Map'), {
         ssr: false
@@ -209,11 +221,57 @@ const RentModal = () => {
 
     if (step === STEPS.CONVENIENCE) {
         bodyContent = (
-            <div className="flex flex-col gap-8">
-                <Heading
-                    title="Какие удобства у вас есть?"
-                    subtitle="Расскажите гостям о своих удобствах!"
-                />
+            <div className="overflow-scroll overflow-x-hidden max-h-[60vh]">
+                <div className="flex flex-col gap-8">
+                    <Heading
+                        title="Какие удобства у вас есть?"
+                        subtitle="Расскажите гостям о своих удобствах!"
+                    />
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto">
+                        {conveniences.map((item) => (
+                            <div key={item.label} className="col-span-1">
+                                <ConvenienceInput
+                                    onClick={(convenience) => setCustomValue('convenience', convenience)}
+                                    selected={convenience === item.label}
+                                    label={item.label}
+                                    icon={item.icon}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <hr/>
+                    <Heading
+                        title="Есть ли у вас что-то особенное?"
+                    />
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto">
+                        {specials.map((item) => (
+                            <div key={item.label} className="col-span-1">
+                                <SpecialInput
+                                    onClick={(special) => setCustomValue('special', special)}
+                                    selected={special === item.label}
+                                    label={item.label}
+                                    icon={item.icon}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <hr/>
+                    <Heading
+                        title="Отметьте средства безопасности"
+                    />
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto">
+                        {safeties.map((item) => (
+                            <div key={item.label} className="col-span-1">
+                                <SafetyInput
+                                    onClick={(safety) => setCustomValue('safety', safety)}
+                                    selected={safety === item.label}
+                                    label={item.label}
+                                    icon={item.icon}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         )
     }
@@ -233,7 +291,7 @@ const RentModal = () => {
                     errors={errors}
                     required
                 />
-                <hr />
+                <hr/>
                 <Input
                     id="description"
                     label="Описание"
