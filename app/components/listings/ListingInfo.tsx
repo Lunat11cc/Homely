@@ -5,7 +5,7 @@ import { SafeUser } from "@/app/types";
 import useCountries from "@/app/hooks/useCountries";
 import Avatar from "@/app/components/Avatar";
 import dynamic from "next/dynamic";
-import { FcApproval } from "react-icons/fc";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const Map = dynamic(() => import('@/app/components/Map'), {
     ssr: false
@@ -42,17 +42,17 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
                 </div>
                 <hr/>
             </div>
-            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black">
+            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black mt-4">
                 <div className="flex flex-row gap-4">
-                    <FcApproval size={25} />
+                    <IoIosCheckmarkCircle size={25} color="#F8C07E" />
                     Принимает гостей: {guestCount}
                 </div>
                 <div className="flex flex-row gap-4">
-                    <FcApproval size={25} />
+                    <IoIosCheckmarkCircle size={25} color="#F8C07E" />
                     Всего комнат: {roomCount}
                 </div>
                 <div className="flex flex-row gap-4">
-                    <FcApproval size={25} />
+                    <IoIosCheckmarkCircle size={25} color="#F8C07E" />
                     Ванных комнат: {bathroomCount}
                 </div>
             </div>
