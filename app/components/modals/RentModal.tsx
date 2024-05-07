@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Modal from "@/app/components/modals/Modal";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -15,9 +15,9 @@ import Input from "@/app/components/inputs/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import {conveniences} from "@/app/data/Conveniences";
-import {specials} from "@/app/data/Specials";
-import {safeties} from "@/app/data/Safety";
+import { conveniences } from "@/app/data/Conveniences";
+import { specials } from "@/app/data/Specials";
+import { safeties } from "@/app/data/Safety";
 import ConvenienceInput from "@/app/components/inputs/ConvenienceInput";
 import SpecialInput from "@/app/components/inputs/SpecialInput";
 import SafetyInput from "@/app/components/inputs/SafetyInput";
@@ -38,6 +38,11 @@ const RentModal = () => {
 
     const [step, setStep] = useState(STEPS.CATEGORY);
     const [isLoading, setIsLoading] = useState(false);
+
+    const [selectedConveniences, setSelectedConveniences] = useState<string[]>([]);
+    const [selectedSpecials, setSelectedSpecials] = useState<string[]>([]);
+    const [selectedSafeties, setSelectedSafeties] = useState<string[]>([]);
+
 
     const {
         register,
@@ -65,15 +70,33 @@ const RentModal = () => {
         }
     });
 
+    const handleConvenienceSelection = (label: string) => {
+        setSelectedConveniences(prevState => {
+            const isSelected = prevState.includes(label);
+            return isSelected ? prevState.filter(item => item !== label) : [...prevState, label];
+        });
+    };
+
+    const handleSpecialSelection = (label: string) => {
+        setSelectedSpecials(prevState => {
+            const isSelected = prevState.includes(label);
+            return isSelected ? prevState.filter(item => item !== label) : [...prevState, label];
+        });
+    };
+
+    const handleSafetySelection = (label: string) => {
+        setSelectedSafeties(prevState => {
+            const isSelected = prevState.includes(label);
+            return isSelected ? prevState.filter(item => item !== label) : [...prevState, label];
+        });
+    };
+
     const category = watch('category');
     const location = watch('location');
     const guestCount = watch('guestCount');
     const roomCount = watch('roomCount');
     const bathroomCount = watch('bathroomCount');
     const imageSrc = watch('imageSrc');
-    const convenience = watch('convenience');
-    const special = watch('special');
-    const safety = watch('safety');
 
     const Map = useMemo(() => dynamic(() => import('@/app/components/Map'), {
         ssr: false
@@ -95,16 +118,21 @@ const RentModal = () => {
         setStep((value) => value + 1);
     }
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
         if (step !== STEPS.PRICE) {
             return onNext();
         }
 
         setIsLoading(true);
 
-        console.log(data.imageSrc)
+        const formData = {
+            ...data,
+            convenience: selectedConveniences,
+            special: selectedSpecials,
+            safety: selectedSafeties
+        };
 
-        axios.post('/api/listings', data)
+        axios.post('/api/listings', formData)
             .then(() => {
                 toast.success('Объявление создано!');
                 router.refresh();
@@ -231,8 +259,8 @@ const RentModal = () => {
                         {conveniences.map((item) => (
                             <div key={item.label} className="col-span-1">
                                 <ConvenienceInput
-                                    onClick={(convenience) => setCustomValue('convenience', convenience)}
-                                    selected={convenience === item.label}
+                                    onClick={(convenience) => handleConvenienceSelection(convenience)}
+                                    selected={selectedConveniences.includes(item.label)}
                                     label={item.label}
                                     icon={item.icon}
                                 />
@@ -247,8 +275,8 @@ const RentModal = () => {
                         {specials.map((item) => (
                             <div key={item.label} className="col-span-1">
                                 <SpecialInput
-                                    onClick={(special) => setCustomValue('special', special)}
-                                    selected={special === item.label}
+                                    onClick={(special) => handleSpecialSelection(special)}
+                                    selected={selectedSpecials.includes(item.label)}
                                     label={item.label}
                                     icon={item.icon}
                                 />
@@ -263,8 +291,8 @@ const RentModal = () => {
                         {safeties.map((item) => (
                             <div key={item.label} className="col-span-1">
                                 <SafetyInput
-                                    onClick={(safety) => setCustomValue('safety', safety)}
-                                    selected={safety === item.label}
+                                    onClick={(safety) => handleSafetySelection(safety)}
+                                    selected={selectedSafeties.includes(item.label)}
                                     label={item.label}
                                     icon={item.icon}
                                 />
