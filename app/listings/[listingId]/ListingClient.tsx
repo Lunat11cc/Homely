@@ -13,6 +13,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 import { Range } from "react-date-range";
+import {IconType} from "react-icons";
+import {conveniences} from "@/app/data/Conveniences";
+import {specials} from "@/app/data/Specials";
+import {safeties} from "@/app/data/Safety";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -100,6 +104,45 @@ const ListingClient: React.FC<ListingClientProps> = ({
         return categories.find((item) => item.label === listing.category);
     }, [listing.category]);
 
+    const findConvenience = (label: string) => conveniences.find(convenience => convenience.label === label);
+
+    const matchedConveniences = listing.convenience.map(label => {
+        const convenience = findConvenience(label);
+        if (convenience) {
+            return {
+                label: label,
+                icon: convenience.icon
+            };
+        }
+        return null;
+    }).filter(convenience => convenience !== null) as { label: string; icon: IconType; }[];
+
+    const findSpecial = (label: string) => specials.find(special => special.label === label);
+
+    const matchedSpecials = listing.special.map(label => {
+        const special = findSpecial(label);
+        if (special) {
+            return {
+                label: label,
+                icon: special.icon
+            };
+        }
+        return null;
+    }).filter(special => special !== null) as { label: string; icon: IconType; }[];
+
+    const findSafety = (label: string) => safeties.find(safety => safety.label === label);
+
+    const matchedSafeties = listing.safety.map(label => {
+        const safety = findSafety(label);
+        if (safety) {
+            return {
+                label: label,
+                icon: safety.icon
+            };
+        }
+        return null;
+    }).filter(safety => safety !== null) as { label: string; icon: IconType; }[];
+
     return (
         <Container>
             <div className="max-w-screen-lg mx-auto">
@@ -120,6 +163,9 @@ const ListingClient: React.FC<ListingClientProps> = ({
                             roomCount={listing.roomCount}
                             guestCount={listing.guestCount}
                             bathroomCount={listing.bathroomCount}
+                            convenience={matchedConveniences}
+                            special={matchedSpecials}
+                            safety={matchedSafeties}
                         />
                         <div className="order-first mb-10 md:order-last md:col-span-3">
                             <ListingReservation

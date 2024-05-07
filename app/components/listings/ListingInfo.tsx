@@ -6,6 +6,10 @@ import useCountries from "@/app/hooks/useCountries";
 import Avatar from "@/app/components/Avatar";
 import dynamic from "next/dynamic";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { IconType } from "react-icons";
+import ListingConvenience from "@/app/components/listings/ListingConvenience";
+import ListingSpecial from "@/app/components/listings/ListingSpecial";
+import ListingSafety from "@/app/components/listings/ListingSafety";
 
 const Map = dynamic(() => import('@/app/components/Map'), {
     ssr: false
@@ -18,6 +22,18 @@ interface ListingInfoProps {
     guestCount: number;
     roomCount: number;
     bathroomCount: number;
+    convenience: {
+        icon: IconType;
+        label: string;
+    }[] | undefined;
+    special: {
+        icon: IconType;
+        label: string;
+    }[] | undefined;
+    safety: {
+        icon: IconType;
+        label: string;
+    }[] | undefined
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
@@ -26,7 +42,10 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
     locationValue,
     guestCount,
     roomCount,
-    bathroomCount
+    bathroomCount,
+    convenience,
+    special,
+    safety
 }) => {
     const { getByValue } = useCountries();
 
@@ -44,23 +63,56 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             </div>
             <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black mt-3">
                 <div className="flex flex-row gap-4">
-                    <IoIosCheckmarkCircle size={25} color="#F8C07E" />
+                    <IoIosCheckmarkCircle size={25} color="#F8C07E"/>
                     Принимает гостей: {guestCount}
                 </div>
                 <div className="flex flex-row gap-4">
-                    <IoIosCheckmarkCircle size={25} color="#F8C07E" />
+                    <IoIosCheckmarkCircle size={25} color="#F8C07E"/>
                     Всего комнат: {roomCount}
                 </div>
                 <div className="flex flex-row gap-4">
-                    <IoIosCheckmarkCircle size={25} color="#F8C07E" />
+                    <IoIosCheckmarkCircle size={25} color="#F8C07E"/>
                     Ванных комнат: {bathroomCount}
                 </div>
             </div>
-            <hr />
+            <hr/>
             <div className="text-lg font-light text-neutral-500">
                 {description}
             </div>
             <hr/>
+            <p className="font-bold text-xl">Какие удобства вас ждут</p>
+            <div>
+                {convenience && convenience.map((item, index) => (
+                    <ListingConvenience
+                        key={index}
+                        icon={item.icon}
+                        label={item.label}
+                    />
+                ))}
+            </div>
+
+            <div>
+                {special && special.map((item, index) => (
+                    <ListingSpecial
+                        key={index}
+                        icon={item.icon}
+                        label={item.label}
+                    />
+                ))}
+            </div>
+
+            <div>
+                {safety && safety.map((item, index) => (
+                    <ListingSafety
+                        key={index}
+                        icon={item.icon}
+                        label={item.label}
+                    />
+                ))}
+            </div>
+
+            <hr />
+
             <Map center={coordinates}/>
         </div>
     );

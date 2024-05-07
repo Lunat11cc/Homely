@@ -11,10 +11,10 @@ interface ConvenienceInputProps {
 }
 
 const ConvenienceInput: React.FC<ConvenienceInputProps> = ({
-     icon: Icon,
-     label,
-     selected,
-     onClick
+    icon: Icon,
+    label,
+    selected,
+    onClick
 }) => {
     return (
         <div

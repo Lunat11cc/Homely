@@ -9,9 +9,9 @@ export interface IListingParams {
     endDate?: string;
     locationValue?: string;
     category?: string;
-    convenience?: string;
-    special?: string;
-    safety?: string;
+    convenience?: string[];
+    special?: string[];
+    safety?: string[];
 }
 
 export default async function getListings(
