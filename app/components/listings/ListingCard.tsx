@@ -5,6 +5,7 @@ import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { useRouter } from "next/navigation";
 import useCountries from "@/app/hooks/useCountries";
 import { format } from "date-fns";
+import ruLocale from 'date-fns/locale/ru';
 import Image from "next/image";
 import HeartButton from "@/app/components/HeartButton";
 import Button from "@/app/components/Button";
@@ -60,7 +61,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         const start = new Date(reservation.startDate);
         const end = new Date(reservation.endDate);
 
-        return `${format(start, 'PP')} - ${format(end, 'PP')}`
+        return `${format(start, 'PP', { locale: ruLocale })} - ${format(end, 'PP', { locale: ruLocale })}`
     }, [reservation]);
 
     return (
