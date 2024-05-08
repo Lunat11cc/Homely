@@ -28,13 +28,18 @@ const UserMenu: React.FC<UserMenuProps> = ({
         setIsOpen((value) => !value);
     }, []);
 
+    const closeMenu = useCallback(() => {
+        setIsOpen(false);
+    }, []);
+
     const onRent = useCallback(() => {
         if (!currentUser) {
-            return loginModal.onOpen();
+            loginModal.onOpen();
+        } else {
+            rentModal.onOpen();
+            closeMenu();
         }
-
-        rentModal.onOpen();
-    }, [currentUser, loginModal, rentModal]);
+    }, [currentUser, loginModal, rentModal, closeMenu]);
 
     return (
         <div className="relative">
@@ -100,20 +105,32 @@ const UserMenu: React.FC<UserMenuProps> = ({
                         {currentUser ? (
                             <>
                                 <MenuItem
-                                    onClick={() => router.push('/trips')}
+                                    onClick={() => {
+                                        router.push('/trips')
+                                        closeMenu()
+                                    }}
                                     label="Поездки"
                                 />
                                 <MenuItem
-                                    onClick={() => router.push('/favorites')}
+                                    onClick={() => {
+                                        router.push('/favorites')
+                                        closeMenu()
+                                    }}
                                     label="Избранное"
                                 />
                                 <hr />
                                 <MenuItem
-                                    onClick={() => router.push('/properties')}
+                                    onClick={() => {
+                                        router.push('/properties')
+                                        closeMenu()
+                                    }}
                                     label="Мое жилье"
                                 />
                                 <MenuItem
-                                    onClick={() => router.push('/reservations')}
+                                    onClick={() => {
+                                        router.push('/reservations')
+                                        closeMenu()
+                                    }}
                                     label="Бронирования"
                                 />
                                 <hr />
