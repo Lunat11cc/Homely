@@ -1,9 +1,7 @@
 'use client';
 
 import React from 'react';
-import { SafeUser } from "@/app/types";
 import useCountries from "@/app/hooks/useCountries";
-import Avatar from "@/app/components/Avatar";
 import dynamic from "next/dynamic";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IconType } from "react-icons";
@@ -16,7 +14,6 @@ const Map = dynamic(() => import('@/app/components/Map'), {
 });
 
 interface ListingInfoProps {
-    user: SafeUser;
     description: string;
     locationValue: string;
     guestCount: number;
@@ -37,7 +34,6 @@ interface ListingInfoProps {
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
-    user,
     description,
     locationValue,
     guestCount,
@@ -53,15 +49,8 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
 
     return (
         <div className="col-span-4 flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-                <hr/>
-                <div className="text-xl font-semibold flex flex-row items-center gap-2 mt-4 mb-4">
-                    <Avatar src={user?.image}/>
-                    <div>Хозяин: {user?.name}</div>
-                </div>
-                <hr/>
-            </div>
-            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black mt-3">
+            <hr/>
+            <div className="flex flex-col items-start gap-4 text-xl font-semibold text-black">
                 <div className="flex flex-row gap-4">
                     <IoIosCheckmarkCircle size={25} color="#F8C07E"/>
                     Принимает гостей: {guestCount}
@@ -82,37 +71,36 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             <hr/>
             <p className="font-bold text-xl">Какие удобства вас ждут</p>
             <div>
-                {convenience && convenience.map((item, index) => (
-                    <ListingConvenience
-                        key={index}
-                        icon={item.icon}
-                        label={item.label}
-                    />
-                ))}
+                <div>
+                    {convenience && convenience.map((item, index) => (
+                        <ListingConvenience
+                            key={index}
+                            icon={item.icon}
+                            label={item.label}
+                        />
+                    ))}
+                </div>
+                <div>
+                    {special && special.map((item, index) => (
+                        <ListingSpecial
+                            key={index}
+                            icon={item.icon}
+                            label={item.label}
+                        />
+                    ))}
+                </div>
+                <div>
+                    {safety && safety.map((item, index) => (
+                        <ListingSafety
+                            key={index}
+                            icon={item.icon}
+                            label={item.label}
+                        />
+                    ))}
+                </div>
             </div>
-
-            <div>
-                {special && special.map((item, index) => (
-                    <ListingSpecial
-                        key={index}
-                        icon={item.icon}
-                        label={item.label}
-                    />
-                ))}
-            </div>
-
-            <div>
-                {safety && safety.map((item, index) => (
-                    <ListingSafety
-                        key={index}
-                        icon={item.icon}
-                        label={item.label}
-                    />
-                ))}
-            </div>
-
-            <hr />
-
+            <hr/>
+            <p className="font-bold text-xl">Где вы будете жить</p>
             <Map center={coordinates}/>
         </div>
     );

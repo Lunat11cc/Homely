@@ -13,15 +13,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 import { Range } from "react-date-range";
-import {IconType} from "react-icons";
-import {conveniences} from "@/app/data/Conveniences";
-import {specials} from "@/app/data/Specials";
-import {safeties} from "@/app/data/Safety";
+import { IconType } from "react-icons";
+import { conveniences } from "@/app/data/Conveniences";
+import { specials } from "@/app/data/Specials";
+import { safeties } from "@/app/data/Safety";
 
 const initialDateRange = {
     startDate: new Date(),
     endDate: new Date(),
-    key: 'selection'
+    key: 'selection',
 };
 
 interface ListingClientProps {
@@ -35,7 +35,7 @@ interface ListingClientProps {
 const ListingClient: React.FC<ListingClientProps> = ({
     listing,
     reservations = [],
-    currentUser
+    currentUser,
 }) => {
     const loginModal = useLoginModal();
     const router = useRouter();
@@ -144,7 +144,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     }).filter(safety => safety !== null) as { label: string; icon: IconType; }[];
 
     return (
-        <Container>
+        <Container >
             <div className="max-w-screen-lg mx-auto">
                 <div className="flex flex-col gap-6">
                     <ListingHead
@@ -157,7 +157,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
                     />
                     <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
                         <ListingInfo
-                            user={listing.user}
                             description={listing.description}
                             locationValue={listing.locationValue}
                             roomCount={listing.roomCount}
@@ -176,6 +175,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
                                 onSubmit={onCreateReservation}
                                 disabled={isLoading}
                                 disabledDates={disabledDates}
+                                user={listing.user}
                             />
                         </div>
                     </div>
