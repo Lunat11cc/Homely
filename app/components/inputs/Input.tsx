@@ -10,7 +10,18 @@ interface InputProps {
     type?: string;
     disabled?: boolean;
     formatPrice?: boolean;
-    required?: boolean;
+    required?: {
+        value: boolean
+        message: string
+    }
+    minLength?: {
+        value: number
+        message: string
+    }
+    pattern?: {
+        value: RegExp
+        message: string
+    }
     register: UseFormRegister<FieldValues>,
     errors: FieldErrors
 }
@@ -23,6 +34,8 @@ const Input: React.FC<InputProps> = ({
     formatPrice,
     required,
     register,
+    minLength,
+    pattern,
     errors
 }) => {
     return (
@@ -36,7 +49,11 @@ const Input: React.FC<InputProps> = ({
             <input
                 id={id}
                 disabled={disabled}
-                {...register(id, { required })}
+                {...register(id, {
+                    required,
+                    minLength,
+                    pattern
+                })}
                 placeholder=" "
                 type={type}
                 className={`
@@ -57,6 +74,9 @@ const Input: React.FC<InputProps> = ({
                     ${errors[id] ? 'focus:border-beige' : 'focus:border-black'}
                 `}
             />
+            <div className='absolute top-6 right-2 text-beige'>
+                {errors[id] && <>{errors[id]?.message}</>}
+            </div>
             <label
                 className={`
                     absolute 

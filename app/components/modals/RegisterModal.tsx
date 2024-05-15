@@ -65,7 +65,14 @@ const RegisterModal = () => {
                disabled={isLoading}
                register={register}
                errors={errors}
-               required
+               required={{
+                   value: true,
+                   message: 'Обязательно для заполнения!'
+               }}
+               minLength={{
+                   value: 3,
+                   message: 'Минимальная длина - 3 символа!'
+               }}
            />
            <Input
                id="email"
@@ -73,7 +80,14 @@ const RegisterModal = () => {
                disabled={isLoading}
                register={register}
                errors={errors}
-               required
+               required={{
+                   value: true,
+                   message: 'Обязательно для заполнения!'
+               }}
+               pattern={{
+                   value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                   message: 'Введите корректный адрес электронной почты!'
+               }}
            />
            <Input
                id="password"
@@ -82,7 +96,14 @@ const RegisterModal = () => {
                disabled={isLoading}
                register={register}
                errors={errors}
-               required
+               required={{
+                   value: true,
+                   message: 'Обязательно для заполнения!'
+               }}
+               minLength={{
+                   value: 6,
+                   message: 'Минимальная длина - 6 символов!'
+               }}
            />
        </div>
     );

@@ -71,7 +71,10 @@ const LoginModal = () => {
                 disabled={isLoading}
                 register={register}
                 errors={errors}
-                required
+                required={{
+                    value: true,
+                    message: 'Обязательно для заполнения!'
+                }}
             />
             <Input
                 id="password"
@@ -80,7 +83,10 @@ const LoginModal = () => {
                 disabled={isLoading}
                 register={register}
                 errors={errors}
-                required
+                required={{
+                    value: true,
+                    message: 'Обязательно для заполнения!'
+                }}
             />
         </div>
     );

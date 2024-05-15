@@ -317,7 +317,10 @@ const RentModal = () => {
                     disabled={isLoading}
                     register={register}
                     errors={errors}
-                    required
+                    required={{
+                        value: true,
+                        message: 'Обязательно для заполнения!'
+                    }}
                 />
                 <hr/>
                 <Input
@@ -326,7 +329,10 @@ const RentModal = () => {
                     disabled={isLoading}
                     register={register}
                     errors={errors}
-                    required
+                    required={{
+                        value: true,
+                        message: 'Обязательно для заполнения!'
+                    }}
                 />
             </div>
         )
@@ -347,7 +353,10 @@ const RentModal = () => {
                     disabled={isLoading}
                     register={register}
                     errors={errors}
-                    required
+                    required={{
+                        value: true,
+                        message: 'Обязательно для заполнения!'
+                    }}
                 />
             </div>
         )
