@@ -3,7 +3,7 @@
 import axios from "axios";
 import { FaYandex } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
@@ -22,31 +22,39 @@ const RegisterModal = () => {
     const {
         register,
         handleSubmit,
-        formState: {
-            errors
-        }
+        formState: { errors },
     } = useForm<FieldValues>({
         defaultValues: {
-            name: '',
-            email: '',
-            password: ''
-        }
+            name: "",
+            email: "",
+            password: "",
+        },
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true);
 
-        axios.post('/api/register', data)
-            .then(() => {
-                toast.success('Успешно!')
-                registerModal.onClose();
-                loginModal.onOpen();
-            }).catch((error) => {
-                toast.error('Что-то пошло не так!');
-            }).finally(() => {
-                setIsLoading(false);
-            })
-    }
+        try {
+            await toast.promise(
+                axios.post("/api/register", data),
+                {
+                    loading: "Выполняется регистрация...",
+                    success: () => {
+                        registerModal.onClose();
+                        loginModal.onOpen();
+                        return 'Регистрация прошла успешно!'
+                    },
+                    error: (error) => {
+                        return error.message || "Что-то пошло не так!";
+                    },
+                }
+            );
+        } catch (error) {
+            toast.error("Что-то пошло не так!");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const toggle = useCallback(() => {
         registerModal.onClose();
@@ -54,58 +62,58 @@ const RegisterModal = () => {
     }, [loginModal, registerModal]);
 
     const bodyContent = (
-       <div className="flex flex-col gap-4">
-           <Heading
-               title="Добро пожаловать в Homely!"
-               subtitle="Пожалуйста, зарегистрируйтесь"
-           />
-           <Input
-               id="name"
-               label="Имя"
-               disabled={isLoading}
-               register={register}
-               errors={errors}
-               required={{
-                   value: true,
-                   message: 'Обязательно для заполнения!'
-               }}
-               minLength={{
-                   value: 3,
-                   message: 'Минимальная длина - 3 символа!'
-               }}
-           />
-           <Input
-               id="email"
-               label="Почта"
-               disabled={isLoading}
-               register={register}
-               errors={errors}
-               required={{
-                   value: true,
-                   message: 'Обязательно для заполнения!'
-               }}
-               pattern={{
-                   value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                   message: 'Введите корректный адрес электронной почты!'
-               }}
-           />
-           <Input
-               id="password"
-               type="password"
-               label="Пароль"
-               disabled={isLoading}
-               register={register}
-               errors={errors}
-               required={{
-                   value: true,
-                   message: 'Обязательно для заполнения!'
-               }}
-               minLength={{
-                   value: 6,
-                   message: 'Минимальная длина - 6 символов!'
-               }}
-           />
-       </div>
+        <div className="flex flex-col gap-4">
+            <Heading
+                title="Добро пожаловать в Homely!"
+                subtitle="Пожалуйста, зарегистрируйтесь"
+            />
+            <Input
+                id="name"
+                label="Имя"
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required={{
+                    value: true,
+                    message: "Обязательно для заполнения!",
+                }}
+                minLength={{
+                    value: 3,
+                    message: "Минимальная длина - 3 символа!",
+                }}
+            />
+            <Input
+                id="email"
+                label="Почта"
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required={{
+                    value: true,
+                    message: "Обязательно для заполнения!",
+                }}
+                pattern={{
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Введите корректный адрес электронной почты!",
+                }}
+            />
+            <Input
+                id="password"
+                type="password"
+                label="Пароль"
+                disabled={isLoading}
+                register={register}
+                errors={errors}
+                required={{
+                    value: true,
+                    message: "Обязательно для заполнения!",
+                }}
+                minLength={{
+                    value: 6,
+                    message: "Минимальная длина - 6 символов!",
+                }}
+            />
+        </div>
     );
 
     const footerContent = (
@@ -115,20 +123,18 @@ const RegisterModal = () => {
                 outline
                 label="Войти через Google"
                 icon={FcGoogle}
-                onClick={() => signIn('google')}
+                onClick={() => signIn("google")}
             />
             <Button
                 outline
                 label="Войти через Яндекс"
                 icon={FaYandex}
-                onClick={() => signIn('yandex')}
+                onClick={() => signIn("yandex")}
                 iconColor="red"
             />
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <div className="flex flex-row justify-center items-center gap-2">
-                    <div>
-                        Уже есть аккаунт?
-                    </div>
+                    <div>Уже есть аккаунт?</div>
                     <div
                         onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
@@ -138,7 +144,7 @@ const RegisterModal = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 
     return (
         <Modal

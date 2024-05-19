@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { FaYandex } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
@@ -23,36 +23,41 @@ const LoginModal = () => {
     const {
         register,
         handleSubmit,
-        formState: {
-            errors
-        }
+        formState: { errors },
     } = useForm<FieldValues>({
         defaultValues: {
-            email: '',
-            password: ''
-        }
+            email: "",
+            password: "",
+        },
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true);
 
-        signIn('credentials', {
-            ...data,
-            redirect: false,
-        }).then((callback) => {
+        try {
+            await toast.promise(
+                signIn("credentials", {
+                    ...data,
+                    redirect: false,
+                }),
+                {
+                    loading: "Выполняется авторизация...",
+                    success: () => {
+                        router.refresh();
+                        loginModal.onClose();
+                        return "Авторизация прошла успешно!";
+                    },
+                    error: (error) => {
+                        return error.message || "Что-то пошло не так!";
+                    },
+                }
+            );
+        } catch (error) {
+            toast.error("Что-то пошло не так!");
+        } finally {
             setIsLoading(false);
-
-            if (callback?.ok) {
-                toast.success('Вход');
-                router.refresh();
-                loginModal.onClose();
-            }
-
-            if (callback?.error) {
-                toast.error(callback.error);
-            }
-        })
-    }
+        }
+    };
 
     const toggle = useCallback(() => {
         loginModal.onClose();
@@ -73,7 +78,7 @@ const LoginModal = () => {
                 errors={errors}
                 required={{
                     value: true,
-                    message: 'Обязательно для заполнения!'
+                    message: "Обязательно для заполнения!",
                 }}
             />
             <Input
@@ -85,7 +90,7 @@ const LoginModal = () => {
                 errors={errors}
                 required={{
                     value: true,
-                    message: 'Обязательно для заполнения!'
+                    message: "Обязательно для заполнения!",
                 }}
             />
         </div>
@@ -98,20 +103,18 @@ const LoginModal = () => {
                 outline
                 label="Войти через Google"
                 icon={FcGoogle}
-                onClick={() => signIn('google')}
+                onClick={() => signIn("google")}
             />
             <Button
                 outline
                 label="Войти через Яндекс"
                 icon={FaYandex}
-                onClick={() => signIn('yandex')}
+                onClick={() => signIn("yandex")}
                 iconColor="red"
             />
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <div className="flex flex-row justify-center items-center gap-2">
-                    <div>
-                        Первый раз в Homely?
-                    </div>
+                    <div>Первый раз в Homely?</div>
                     <div
                         onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
@@ -121,7 +124,7 @@ const LoginModal = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 
     return (
         <Modal
