@@ -39,24 +39,25 @@ const Input: React.FC<InputProps> = ({
     errors
 }) => {
     return (
-        <div className="w-full relative">
-            {formatPrice && (
-                <BiRuble
-                    size={24}
-                    className="text-neutral-700 absolute top-5 left-2"
-                />
-            )}
-            <input
-                id={id}
-                disabled={disabled}
-                {...register(id, {
-                    required,
-                    minLength,
-                    pattern
-                })}
-                placeholder=" "
-                type={type}
-                className={`
+        <>
+            <div className="w-full relative">
+                {formatPrice && (
+                    <BiRuble
+                        size={24}
+                        className="text-neutral-700 absolute top-5 left-2"
+                    />
+                )}
+                <input
+                    id={id}
+                    disabled={disabled}
+                    {...register(id, {
+                        required,
+                        minLength,
+                        pattern
+                    })}
+                    placeholder=" "
+                    type={type}
+                    className={`
                     peer 
                     w-full 
                     p-4 
@@ -73,12 +74,9 @@ const Input: React.FC<InputProps> = ({
                     ${errors[id] ? 'border-beige' : 'border-neutral-300'}
                     ${errors[id] ? 'focus:border-beige' : 'focus:border-black'}
                 `}
-            />
-            <div className='absolute top-6 right-2 text-beige'>
-                {errors[id] && <>{errors[id]?.message}</>}
-            </div>
-            <label
-                className={`
+                />
+                <label
+                    className={`
                     absolute 
                     text-md
                     duration-150
@@ -94,10 +92,14 @@ const Input: React.FC<InputProps> = ({
                     peer-focus:-translate-y-4
                     ${errors[id] ? 'text-beige' : 'text-zinc-400'}
                 `}
-            >
-                {label}
-            </label>
-        </div>
+                >
+                    {label}
+                </label>
+            </div>
+            <div className='text-beige'>
+                {errors[id] && <>{errors[id]?.message}</>}
+            </div>
+        </>
     );
 };
 

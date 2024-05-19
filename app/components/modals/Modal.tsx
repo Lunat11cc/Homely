@@ -83,7 +83,7 @@ const Modal: React.FC<ModalProps> = ({
                 bg-neutral-800/70
                 "
             >
-                <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
+                <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 mx-auto h-full lg:h-auto md:h-auto">
                     <div
                         className={`
                             translate
@@ -97,8 +97,8 @@ const Modal: React.FC<ModalProps> = ({
                             className="
                                 translate
                                 h-full
-                                lg:h-auto
-                                md:h-auto
+                                md:max-h-[90vh]
+                                xl:max-h-[100vh]
                                 border-0
                                 rounded-lg
                                 shadow-lg
@@ -109,6 +109,7 @@ const Modal: React.FC<ModalProps> = ({
                                 bg-white
                                 outline-none
                                 focus:outline-none
+                                overflow-y-auto
                             "
                         >
                             <div className="flex justify-center items-center p-6 rounded-t relative border-b-[1px]">

@@ -255,7 +255,7 @@ const RentModal = () => {
                         title="Какие удобства у вас есть?"
                         subtitle="Расскажите гостям о своих удобствах!"
                     />
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto">
+                    <div className="grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 gap-3 max-h-[50vh] overflow-y-auto">
                         {conveniences.map((item) => (
                             <div key={item.label} className="col-span-1">
                                 <ConvenienceInput
@@ -271,7 +271,7 @@ const RentModal = () => {
                     <Heading
                         title="Есть ли у вас что-то особенное?"
                     />
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto">
+                    <div className="grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 gap-3 max-h-[50vh] overflow-y-auto">
                         {specials.map((item) => (
                             <div key={item.label} className="col-span-1">
                                 <SpecialInput
@@ -287,7 +287,7 @@ const RentModal = () => {
                     <Heading
                         title="Отметьте средства безопасности"
                     />
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto">
+                    <div className="grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 gap-3 max-h-[50vh] overflow-y-auto">
                         {safeties.map((item) => (
                             <div key={item.label} className="col-span-1">
                                 <SafetyInput

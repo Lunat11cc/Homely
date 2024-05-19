@@ -96,13 +96,13 @@ const LoginModal = () => {
             <hr />
             <Button
                 outline
-                label="Продолжить с помощью Google"
+                label="Войти через Google"
                 icon={FcGoogle}
                 onClick={() => signIn('google')}
             />
             <Button
                 outline
-                label="Продолжить с помощью Яндекс"
+                label="Войти через Яндекс"
                 icon={FaYandex}
                 onClick={() => signIn('yandex')}
                 iconColor="red"
