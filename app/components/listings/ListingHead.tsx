@@ -38,8 +38,8 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                 title={title}
             />
             <div className="relative">
-                <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
-                    <div className="flex h-full w-full items-center justify-center">
+                <div className="w-full max-h-[60vh] overflow-hidden rounded-xl relative">
+                    <div>
                         <Image
                             src={coverPhoto}
                             alt="Обложка"
@@ -56,7 +56,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                     </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
                     {otherPhotos.map((imageSrc, index) => (
                         <div key={index} className="relative flex">
                             <Image
@@ -64,7 +64,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                                 alt="Дополнительная фотография"
                                 width={330}
                                 height={200}
-                                className="object-cover rounded-md cursor-pointer"
+                                className="object-cover w-full rounded-md cursor-pointer"
                             />
                         </div>
                     ))}
