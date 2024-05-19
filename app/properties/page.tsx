@@ -23,7 +23,7 @@ const PropertiesPage = async () => {
         return (
             <ClientOnly>
                 <EmptyState
-                    title="Жилье не найдено"
+                    title="Объявлений не найдено"
                     subtitle="Похоже, что у вас нет жилья на бронирование"
                 />
             </ClientOnly>
