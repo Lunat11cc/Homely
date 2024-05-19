@@ -24,17 +24,23 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
     const onCancel = useCallback((id: string) => {
         setDeletingId(id);
 
-        axios.delete(`/api/reservations/${id}`)
-            .then(() => {
-                toast.success("Бронирование отменено");
-                router.refresh();
-            })
-            .catch(() => {
-                toast.error("Что-то пошло не так!");
-            })
-            .finally(() => {
-                setDeletingId('');
-            })
+        toast.promise(
+            axios.delete(`/api/reservations/${id}`)
+                .then(() => {
+                    router.refresh();
+                })
+                .catch(() => {
+                    toast.error("Что-то пошло не так!");
+                })
+                .finally(() => {
+                    setDeletingId('');
+                }),
+            {
+                loading: 'Отмена бронирования...',
+                success: 'Бронирование отменено!',
+                error: 'Что-то пошло не так!',
+            }
+        );
     }, [router]);
 
     return (

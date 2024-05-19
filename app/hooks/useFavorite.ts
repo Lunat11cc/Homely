@@ -18,7 +18,6 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
 
     const hasFavorited = useMemo(() => {
         const list = currentUser?.favoriteIds || [];
-
         return list.includes(listingId);
     }, [currentUser, listingId]);
 
@@ -29,24 +28,27 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
             return loginModal.onOpen();
         }
 
-        try {
-            let request;
-            let message;
+        let request;
+        let successMessage;
 
-            if (hasFavorited) {
-                request = () => axios.delete(`/api/favorites/${listingId}`);
-                message = 'Вы убрали из избранного!'
-            } else {
-                request = () => axios.post(`/api/favorites/${listingId}`);
-                message = 'Вы добавили в избранное!'
-            }
-
-            await request();
-            router.refresh();
-            toast.success(message);
-        } catch (error) {
-            toast.error('Что-то пошло не так')
+        if (hasFavorited) {
+            request = () => axios.delete(`/api/favorites/${listingId}`);
+            successMessage = 'Вы убрали из избранного!';
+        } else {
+            request = () => axios.post(`/api/favorites/${listingId}`);
+            successMessage = 'Вы добавили в избранное!';
         }
+
+        toast.promise(
+            request().then(() => {
+                router.refresh();
+            }),
+            {
+                loading: 'Обновление избранного...',
+                success: successMessage,
+                error: 'Что-то пошло не так'
+            }
+        );
     }, [currentUser, hasFavorited, listingId, loginModal, router]);
 
     return {

@@ -1,7 +1,7 @@
 'use client';
 
-import React, {useCallback, useState} from "react";
-import {SafeListing, SafeUser} from "@/app/types";
+import React, { useCallback, useState } from "react";
+import { SafeListing, SafeUser } from "@/app/types";
 import Container from "@/app/components/Container";
 import Heading from "@/app/components/Heading";
 import { useRouter } from "next/navigation";
@@ -24,17 +24,23 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
     const onCancel = useCallback((id: string) => {
         setDeletingId(id);
 
-        axios.delete(`/api/listings/${id}`)
-            .then(() => {
-                toast.success('Объявление удалено');
-                router.refresh();
-            })
+        toast.promise(
+            axios.delete(`/api/listings/${id}`)
+                .then(() => {
+                    router.refresh();
+                }),
+            {
+                loading: 'Удаление объявления...',
+                success: 'Объявление удалено!',
+                error: 'Что-то пошло не так!',
+            }
+        )
             .catch((error) => {
                 toast.error(error?.response?.data?.error);
             })
             .finally(() => {
                 setDeletingId('');
-            })
+            });
     }, [router]);
 
     return (
@@ -62,7 +68,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
                         actionId={listing.id}
                         onAction={onCancel}
                         disabled={deletingId === listing.id}
-                        actionLabel="Удалить жилье"
+                        actionLabel="Удалить объявление"
                         currentUser={currentUser}
                     />
                 ))}

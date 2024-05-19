@@ -33,10 +33,10 @@ interface ListingClientProps {
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({
-    listing,
-    reservations = [],
-    currentUser,
-}) => {
+                                                         listing,
+                                                         reservations = [],
+                                                         currentUser,
+                                                     }) => {
     const loginModal = useLoginModal();
     const router = useRouter();
 
@@ -66,23 +66,29 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
         setIsLoading(true);
 
-        axios.post('/api/reservations', {
-            totalPrice,
-            startDate: dateRange.startDate,
-            endDate: dateRange.endDate,
-            listingId: listing?.id
-        })
-        .then(() => {
-            toast.success('Объявление забронировано!');
-            setDateRange(initialDateRange);
-            router.push('/trips');
-        })
-        .catch(() => {
-            toast.error('Что-то пошло не так');
-        })
-            .finally(() => {
-            setIsLoading(false);
-        })
+        toast.promise(
+            axios.post('/api/reservations', {
+                totalPrice,
+                startDate: dateRange.startDate,
+                endDate: dateRange.endDate,
+                listingId: listing?.id
+            })
+                .then(() => {
+                    setDateRange(initialDateRange);
+                    router.push('/trips');
+                })
+                .catch(() => {
+                    toast.error('Что-то пошло не так');
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                }),
+            {
+                loading: 'Бронирование...',
+                success: 'Объявление забронировано!',
+                error: 'Что-то пошло не так',
+            }
+        );
     }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal]);
 
     useEffect(() => {
