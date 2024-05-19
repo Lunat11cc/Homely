@@ -132,18 +132,22 @@ const RentModal = () => {
             safety: selectedSafeties
         };
 
-        axios.post('/api/listings', formData)
-            .then(() => {
-                toast.success('Объявление создано!');
-                router.refresh();
-                reset();
-                setStep(STEPS.CATEGORY);
-                rentModal.onClose();
-            }).catch(() => {
-                toast.error('Что-то пошло не так!');
-            }).finally(() => {
-                setIsLoading(false);
-        })
+        toast.promise(
+            axios.post('/api/listings', formData)
+                .then(() => {
+                    router.refresh();
+                    reset();
+                    setStep(STEPS.CATEGORY);
+                    rentModal.onClose();
+                }),
+            {
+                loading: 'Создание объявления...',
+                success: 'Объявление создано!',
+                error: 'Что-то пошло не так!'
+            }
+        ).finally(() => {
+            setIsLoading(false);
+        });
     }
 
     const actionLabel = useMemo(() => {

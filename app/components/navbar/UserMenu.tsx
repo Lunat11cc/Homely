@@ -121,7 +121,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                         router.push('/properties')
                                         closeMenu()
                                     }}
-                                    label="Мое жилье"
+                                    label="Мои объявления"
                                 />
                                 <MenuItem
                                     onClick={() => {
