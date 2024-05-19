@@ -45,23 +45,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
                 <div
-                    onClick={onRent}
-                    className="
-                        hidden
-                        md:block
-                        text-sm
-                        font-semibold
-                        py-3
-                        px-4
-                        rounded-full
-                        hover:bg-neutral-100
-                        transition
-                        cursor-pointer
-                    "
-                >
-                    Сдать жилье на Homely
-                </div>
-                <div
                     onClick={toggleOpen}
                     className="
                         p-4
@@ -92,8 +75,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
                         absolute
                         rounded-xl
                         shadow-md
-                        w-[40vw]
-                        md:w-3/4
                         bg-white
                         overflow-hidden
                         right-0
@@ -104,6 +85,15 @@ const UserMenu: React.FC<UserMenuProps> = ({
                     <div className="flex flex-col cursor-pointer">
                         {currentUser ? (
                             <>
+                                <MenuItem
+                                    onClick={() => {
+                                        router.push('/')
+                                        closeMenu()
+                                    }}
+                                    label="Главная"
+                                    className="md:hidden block"
+                                />
+                                <hr className="md:hidden" />
                                 <MenuItem
                                     onClick={() => {
                                         router.push('/trips')
@@ -119,6 +109,13 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                     label="Избранное"
                                 />
                                 <hr />
+                                <MenuItem
+                                    onClick={() => {
+                                        onRent()
+                                        closeMenu()
+                                    }}
+                                    label="Сдать жилье"
+                                />
                                 <MenuItem
                                     onClick={() => {
                                         router.push('/properties')

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { SafeListing, SafeUser } from "@/app/types";
 import Container from "@/app/components/Container";
