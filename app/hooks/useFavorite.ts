@@ -31,16 +31,19 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
 
         try {
             let request;
+            let message;
 
             if (hasFavorited) {
                 request = () => axios.delete(`/api/favorites/${listingId}`);
+                message = 'Вы убрали из избранного!'
             } else {
                 request = () => axios.post(`/api/favorites/${listingId}`);
+                message = 'Вы добавили в избранное!'
             }
 
             await request();
             router.refresh();
-            toast.success('Успешно');
+            toast.success(message);
         } catch (error) {
             toast.error('Что-то пошло не так')
         }
@@ -53,13 +56,3 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
 }
 
 export default useFavorite;
-
-
-
-
-
-
-
-
-
-
