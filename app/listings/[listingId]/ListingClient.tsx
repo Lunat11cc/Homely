@@ -33,10 +33,10 @@ interface ListingClientProps {
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({
-                                                         listing,
-                                                         reservations = [],
-                                                         currentUser,
-                                                     }) => {
+    listing,
+    reservations = [],
+    currentUser,
+}) => {
     const loginModal = useLoginModal();
     const router = useRouter();
 

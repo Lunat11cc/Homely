@@ -34,29 +34,26 @@ const LoginModal = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true);
 
-        try {
-            await toast.promise(
-                signIn("credentials", {
-                    ...data,
-                    redirect: false,
-                }),
-                {
-                    loading: "Выполняется авторизация...",
-                    success: () => {
-                        router.refresh();
-                        loginModal.onClose();
-                        return "Авторизация прошла успешно!";
-                    },
-                    error: (error) => {
-                        return error.message || "Что-то пошло не так!";
-                    },
+        toast.promise(
+            signIn("credentials", {
+                ...data,
+                redirect: false,
+            }).then((result) => {
+                setIsLoading(false);
+
+                if (result?.error) {
+                    throw new Error(result.error || "Что-то пошло не так!");
+                } else {
+                    router.refresh();
+                    loginModal.onClose();
                 }
-            );
-        } catch (error) {
-            toast.error("Что-то пошло не так!");
-        } finally {
-            setIsLoading(false);
-        }
+            }),
+            {
+                loading: "Выполняется авторизация...",
+                success: "Авторизация прошла успешно!",
+                error: "Введены неверные данные!",
+            }
+        );
     };
 
     const toggle = useCallback(() => {
