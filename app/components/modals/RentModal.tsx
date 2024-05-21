@@ -373,7 +373,7 @@ const RentModal = () => {
             actionLabel={actionLabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-            title="Homely!"
+            title="Создание объявления"
             body={bodyContent}
         />
     );
