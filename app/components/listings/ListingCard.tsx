@@ -34,6 +34,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     const router = useRouter();
     const { getByValue } = useCountries();
     const location = getByValue(data.locationValue);
+    const defaultImageSrc = "../../../images/avatar.svg"
 
     const handleCancel = useCallback(
         (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,6 +66,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
         return `${format(start, 'PP', { locale: ruLocale })} - ${format(end, 'PP', { locale: ruLocale })}`
     }, [reservation]);
 
+    console.log('User:', user);
+
     return (
         <div
             onClick={() => router.push(`/listings/${data.id}`)}
@@ -92,7 +95,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     {reservationDate || data.category}
                 </div>
                 {user?.name && (
-                    <div>Забронировано: {user?.name}</div>
+                    <div className="flex items-center gap-2">
+                        Забронировано:
+                        <Image
+                            src={user.image || defaultImageSrc}
+                            alt='res_photo'
+                            width={25}
+                            height={25}
+                            className="rounded-full"
+                        />
+                        <div>{user?.name}</div>
+                    </div>
                 )}
                 <div className="flex flex-row items-center gap-1">
                     <div className="font-semibold">

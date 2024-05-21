@@ -1,4 +1,4 @@
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
@@ -18,7 +18,7 @@ export async function DELETE(
 
     const { listingId } = params;
 
-    if (!listingId || typeof listingId != 'string') {
+    if (!listingId || typeof listingId !== 'string') {
         throw new Error('Неверный ID');
     }
 
@@ -28,6 +28,29 @@ export async function DELETE(
             userId: currentUser.id
         }
     });
+
+    return NextResponse.json(listing);
+}
+
+export async function GET(
+    request: Request,
+    { params }: { params: IParams }
+) {
+    const { listingId } = params;
+
+    if (!listingId || typeof listingId !== 'string') {
+        throw new Error('Неверный ID');
+    }
+
+    const listing = await prisma.listing.findUnique({
+        where: {
+            id: listingId,
+        },
+    });
+
+    if (!listing) {
+        return NextResponse.error();
+    }
 
     return NextResponse.json(listing);
 }

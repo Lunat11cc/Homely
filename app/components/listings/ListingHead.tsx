@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeUser } from "@/app/types";
 import useCountries from "@/app/hooks/useCountries";
 import Heading from "@/app/components/Heading";
@@ -7,6 +7,7 @@ import HeartButton from "@/app/components/HeartButton";
 import ListingCategory from "@/app/components/listings/ListingCategory";
 import { IconType } from "react-icons";
 import { CiEdit } from "react-icons/ci";
+import UpdateRentModal from "@/app/components/modals/UpdateRentModal";
 
 interface ListingHeadProps {
     title: string;
@@ -34,16 +35,19 @@ const ListingHead: React.FC<ListingHeadProps> = ({
     const { getByValue } = useCountries();
     const location = getByValue(locationValue);
     const [coverPhoto, ...otherPhotos] = imageSrc;
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+    const handleEditClick = () => {
+        setIsUpdateModalOpen(true);
+    };
 
     return (
         <>
             <div className="flex justify-between">
-                <Heading
-                    title={title}
-                />
+                <Heading title={title} />
                 {currentUser?.name === user?.name && (
-                    <div className="flex gap-2 text-lg font-light text-black hover:cursor-pointer hover:opacity-70">
-                        <CiEdit size={25} color="black"/>
+                    <div className="flex gap-2 text-lg font-light text-black hover:cursor-pointer hover:opacity-70" onClick={handleEditClick}>
+                        <CiEdit size={25} color="black" />
                         <p>Редактировать</p>
                     </div>
                 )}
@@ -51,7 +55,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
             <div className="relative">
                 <div className="w-full max-h-[60vh] overflow-hidden rounded-xl relative">
                     <div>
-                    <Image
+                        <Image
                             src={coverPhoto}
                             alt="Обложка"
                             width={500}
@@ -59,10 +63,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                             className="object-cover w-full"
                         />
                         <div className="absolute top-2 right-2">
-                            <HeartButton
-                                listingId={id}
-                                currentUser={currentUser}
-                            />
+                            <HeartButton listingId={id} currentUser={currentUser} />
                         </div>
                     </div>
                 </div>
@@ -89,6 +90,13 @@ const ListingHead: React.FC<ListingHeadProps> = ({
                     />
                 )}
             </div>
+            {isUpdateModalOpen && (
+                <UpdateRentModal
+                    isOpen={isUpdateModalOpen}
+                    onClose={() => setIsUpdateModalOpen(false)}
+                    listingId={id}
+                />
+            )}
         </>
     );
 };
