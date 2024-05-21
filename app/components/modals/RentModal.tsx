@@ -43,7 +43,6 @@ const RentModal = () => {
     const [selectedSpecials, setSelectedSpecials] = useState<string[]>([]);
     const [selectedSafeties, setSelectedSafeties] = useState<string[]>([]);
 
-
     const {
         register,
         handleSubmit,

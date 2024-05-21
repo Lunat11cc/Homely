@@ -5,7 +5,8 @@ import Heading from "@/app/components/Heading";
 import Image from "next/image";
 import HeartButton from "@/app/components/HeartButton";
 import ListingCategory from "@/app/components/listings/ListingCategory";
-import {IconType} from "react-icons";
+import { IconType } from "react-icons";
+import { CiEdit } from "react-icons/ci";
 
 interface ListingHeadProps {
     title: string;
@@ -17,16 +18,18 @@ interface ListingHeadProps {
         icon: IconType;
         label: string;
         description: string;
-    } | undefined
+    } | undefined;
+    user: SafeUser;
 }
 
 const ListingHead: React.FC<ListingHeadProps> = ({
-     title,
-     locationValue,
-     imageSrc,
-     id,
-     currentUser,
-     category,
+    title,
+    locationValue,
+    imageSrc,
+    id,
+    currentUser,
+    category,
+    user
 }) => {
     const { getByValue } = useCountries();
     const location = getByValue(locationValue);
@@ -34,13 +37,21 @@ const ListingHead: React.FC<ListingHeadProps> = ({
 
     return (
         <>
-            <Heading
-                title={title}
-            />
+            <div className="flex justify-between">
+                <Heading
+                    title={title}
+                />
+                {currentUser?.name === user?.name && (
+                    <div className="flex gap-2 text-lg font-light text-black hover:cursor-pointer hover:opacity-70">
+                        <CiEdit size={25} color="black"/>
+                        <p>Редактировать</p>
+                    </div>
+                )}
+            </div>
             <div className="relative">
                 <div className="w-full max-h-[60vh] overflow-hidden rounded-xl relative">
                     <div>
-                        <Image
+                    <Image
                             src={coverPhoto}
                             alt="Обложка"
                             width={500}
