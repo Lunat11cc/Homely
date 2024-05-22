@@ -66,8 +66,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
         return `${format(start, 'PP', { locale: ruLocale })} - ${format(end, 'PP', { locale: ruLocale })}`
     }, [reservation]);
 
-    console.log('User:', user);
-
     return (
         <div
             onClick={() => router.push(`/listings/${data.id}`)}

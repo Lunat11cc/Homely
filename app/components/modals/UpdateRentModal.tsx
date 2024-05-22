@@ -89,7 +89,7 @@ const UpdateRentModal: React.FC<UpdateRentModalProps> = ({ isOpen, onClose, list
                 toast.error('Не удалось загрузить данные объявления');
             });
         }
-    }, [isOpen, listingId, reset, getByValue]);
+    }, []);
 
     const handleConvenienceSelection = (label: string) => {
         setSelectedConveniences(prevState => {
@@ -154,7 +154,7 @@ const UpdateRentModal: React.FC<UpdateRentModalProps> = ({ isOpen, onClose, list
         };
 
         toast.promise(
-            axios.put(`/api/listings/${listingId}`, formData)
+            axios.post(`/api/listings/${listingId}`, formData)
                 .then(() => {
                     router.refresh();
                     reset();
