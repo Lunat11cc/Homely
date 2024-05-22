@@ -162,8 +162,8 @@ const UpdateRentModal: React.FC<UpdateRentModalProps> = ({ isOpen, onClose, list
                     onClose();
                 }),
             {
-                loading: 'Обновление объявления...',
-                success: 'Объявление обновлено!',
+                loading: 'Изменение объявления...',
+                success: 'Объявление изменено!',
                 error: 'Что-то пошло не так!'
             }
         ).finally(() => {
