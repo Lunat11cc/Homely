@@ -3,6 +3,7 @@ import ClientOnly from "@/app/components/ClientOnly";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import PropertiesClient from "@/app/properties/PropertiesClient";
 import getListings from "@/app/actions/getListings";
+import HomeButton from "@/app/components/HomeButton";
 
 const PropertiesPage = async () => {
     const currentUser = await getCurrentUser();
@@ -22,7 +23,7 @@ const PropertiesPage = async () => {
     if (listings.length === 0) {
         return (
             <ClientOnly>
-                <EmptyState
+                <HomeButton
                     title="Объявлений не найдено"
                     subtitle="Похоже, что у вас нет жилья на бронирование"
                 />

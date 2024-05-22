@@ -1,5 +1,5 @@
 import prisma from "@/app/libs/prismadb"
-import {ObjectId} from "mongodb";
+import { ObjectId } from "mongodb";
 
 interface IParams {
     listingId?: string;
@@ -7,19 +7,16 @@ interface IParams {
     authorId?: string;
 }
 
-export default async function getReservations(
-    params: IParams
-) {
+export default async function getReservations(params: IParams) {
     try {
         const { listingId, userId, authorId } = params;
-
-        if (!listingId || !ObjectId.isValid(listingId)) {
-            return [];
-        }
 
         const query: any = {};
 
         if (listingId) {
+            if (!ObjectId.isValid(listingId)) {
+                return [];
+            }
             query.listingId = listingId;
         }
 
@@ -28,7 +25,7 @@ export default async function getReservations(
         }
 
         if (authorId) {
-            query.listing = {userId: authorId}
+            query.listing = { userId: authorId };
         }
 
         const reservations = await prisma.reservation.findMany({
@@ -42,24 +39,22 @@ export default async function getReservations(
             }
         });
 
-        const safeReservations = reservations.map(
-            (reservation) => ({
-                ...reservation,
-                createdAt: reservation.createdAt.toISOString(),
-                startDate: reservation.startDate.toISOString(),
-                endDate: reservation.endDate.toISOString(),
-                listing: {
-                    ...reservation.listing,
-                    createdAt: reservation.listing.createdAt.toISOString()
-                },
-                user: {
-                  ...reservation.user,
-                }
-            })
-        );
+        const safeReservations = reservations.map((reservation) => ({
+            ...reservation,
+            createdAt: reservation.createdAt.toISOString(),
+            startDate: reservation.startDate.toISOString(),
+            endDate: reservation.endDate.toISOString(),
+            listing: {
+                ...reservation.listing,
+                createdAt: reservation.listing.createdAt.toISOString()
+            },
+            user: {
+                ...reservation.user,
+            }
+        }));
 
         return safeReservations;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.message);
     }
 }
