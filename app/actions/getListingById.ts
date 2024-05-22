@@ -1,4 +1,5 @@
 import prisma from "@/app/libs/prismadb"
+import { ObjectId } from 'mongodb';
 
 interface IParams {
     listingId?: string;
@@ -9,6 +10,10 @@ export default async function getListingById(
 ) {
     try {
         const { listingId } = params;
+
+        if (!listingId || !ObjectId.isValid(listingId)) {
+            return null;
+        }
 
         const listing = await prisma.listing.findUnique({
             where: {
