@@ -9,6 +9,7 @@ import ruLocale from 'date-fns/locale/ru';
 import Image from "next/image";
 import HeartButton from "@/app/components/HeartButton";
 import Button from "@/app/components/Button";
+import { truncateText } from "@/app/helpers/truncateText";
 
 interface ListingCardProps {
     data: SafeListing;
@@ -66,6 +67,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
         return `${format(start, 'PP', { locale: ruLocale })} - ${format(end, 'PP', { locale: ruLocale })}`
     }, [reservation]);
 
+    const maxLocationLength = 20;
+
     return (
         <div
             onClick={() => router.push(`/listings/${data.id}`)}
@@ -87,7 +90,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     </div>
                 </div>
                 <div className="font-semibold text-lg">
-                    {location?.region}, {location?.label}
+                    {truncateText(`${location?.region}, ${location?.label}`, maxLocationLength)}
                 </div>
                 <div className="font-light text-neutral-500">
                     {reservationDate || data.category}
