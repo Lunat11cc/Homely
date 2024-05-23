@@ -73,6 +73,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 <div
                     className="
                         absolute
+                        w-40
                         rounded-xl
                         shadow-md
                         bg-white
