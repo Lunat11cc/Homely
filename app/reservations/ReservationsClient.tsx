@@ -46,8 +46,8 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
     return (
         <Container>
             <Heading
-                title="Бронирования"
-                subtitle="Список бронирований вашего жилья"
+                title="Мои гости"
+                subtitle="Список гостей, которые забронировали ваше жилье"
             />
             <div
                 className="

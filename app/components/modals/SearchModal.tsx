@@ -1,9 +1,7 @@
 'use client';
 
 import React, {useCallback, useMemo, useState} from 'react';
-// @ts-ignore
 import Modal from "@/app/components/modals/Modal";
-// @ts-ignore
 import useSearchModal from "@/app/hooks/useSearchModal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Range } from "react-date-range";

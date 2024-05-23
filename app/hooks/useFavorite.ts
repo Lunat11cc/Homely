@@ -2,9 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
-// @ts-ignore
 import { SafeUser } from "@/app/types";
-// @ts-ignore
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface IUseFavorite {

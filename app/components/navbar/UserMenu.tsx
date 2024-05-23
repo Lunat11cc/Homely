@@ -128,7 +128,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                         router.push('/reservations')
                                         closeMenu()
                                     }}
-                                    label="Бронирования"
+                                    label="Мои гости"
                                 />
                                 <hr />
                                 <MenuItem

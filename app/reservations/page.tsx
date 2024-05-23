@@ -27,7 +27,7 @@ const ReservationsPage = async () => {
         return (
             <ClientOnly>
                 <HomeButton
-                    title="Бронирований не найдено"
+                    title="Гостей не найдено"
                     subtitle="Похоже, что никто не забронировал ваше жилье"
                 />
             </ClientOnly>

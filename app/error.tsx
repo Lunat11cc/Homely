@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-// @ts-ignore
 import EmptyState from "@/app/components/EmptyState";
 
 interface ErrorStateProps {
