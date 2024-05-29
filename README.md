@@ -108,17 +108,17 @@ yarn dev
 ```
 
 </h2>
-
+<br>
 <h3>Перед запуском проекта, убедитесь, что у вас заполнен файл .env!<br></br>
 
 | Ключ | Описание | Обязательно |
 | ---------- | ---------- | ---------- |
-| 1. DATABASE_URL | Ссылка на подключение к БД | Да |
-| 2. NEXTAUTH_SECRET | Подпись шифрования и защита конфиденциальных данных | Да |
-| 3. GOOGLE_CLIENT_ID | Уникальный ID Google | Нет |
-| 4. GOOGLE_CLIENT_SECRET | Секретный ключ Google | Нет |
-| 5. YANDEX_CLIENT_ID | Уникальный ID Yandex | Нет |
-| 6. YANDEX_CLIENT_SECRET | Секретный ключ Yandex | Нет |
+| <h5>1. DATABASE_URL</h5> | <h5>Ссылка на подключение к БД</h5> | <h5>Да</h5> |
+| <h5>2. NEXTAUTH_SECRET</h5> | <h5>Подпись шифрования и защита конфиденциальных данных</h5> | <h5>Да</h5> |
+| <h5>3. GOOGLE_CLIENT_ID</h5> | <h5>Уникальный ID Google</h5> | <h5>Нет</h5> |
+| <h5>4. GOOGLE_CLIENT_SECRET</h5> | <h5>Секретный ключ Google</h5> | <h5>Нет</h5> |
+| <h5>5. YANDEX_CLIENT_ID</h5> | <h5>Уникальный ID Yandex</h5> | <h5>Нет</h5> |
+| <h5>6. YANDEX_CLIENT_SECRET</h5> | <h5>Секретный ключ Yandex</h5> | <h5>Нет</h5> |
 
 </h3>
 
