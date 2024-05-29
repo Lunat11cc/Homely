@@ -6,7 +6,7 @@ import ClientOnly from "@/app/components/ClientOnly";
 import Navbar from "@/app/components/navbar/Navbar";
 import RegisterModal from "@/app/components/modals/RegisterModal";
 import LoginModal from "@/app/components/modals/LoginModal";
-import ToasterProvider from "@/app/providers/ToasterProvider";
+import { Toaster } from "react-hot-toast";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import RentModal from "@/app/components/modals/RentModal";
 import SearchModal from "@/app/components/modals/SearchModal";
@@ -30,7 +30,7 @@ export default async function RootLayout({
         <html lang="ru">
           <body className={font.className}>
           <ClientOnly>
-              <ToasterProvider />
+              <Toaster />
               <SearchModal />
               <RentModal />
               <LoginModal />
