@@ -325,7 +325,6 @@ const RentModal = () => {
                         message: 'Обязательно для заполнения!'
                     }}
                 />
-                <hr/>
                 <Input
                     id="description"
                     label="Описание"
