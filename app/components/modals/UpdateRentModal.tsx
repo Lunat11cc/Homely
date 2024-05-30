@@ -347,7 +347,6 @@ const UpdateRentModal: React.FC<UpdateRentModalProps> = ({ isOpen, onClose, list
                         message: 'Обязательно для заполнения!'
                     }}
                 />
-                <hr />
                 <Input
                     id="description"
                     label="Описание"
